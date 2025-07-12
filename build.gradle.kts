@@ -1,12 +1,11 @@
 plugins {
 	java
 	`maven-publish`
-	signing
 	application
 }
 
 group = "net.sf.cssbox"
-version = "1.2-SNAPSHOT"
+version = "1.3-SNAPSHOT"
 description = "A Java Swing component that allows displaying the (X)HTML documents including the CSS support."
 
 java {
@@ -60,26 +59,28 @@ publishing {
 						name.set("Kaj Kandler")
 						email.set("kajkandler@conficio.com")
 						organization.set("Conficio")
-						organizationUrl.set("http://conficio.com")
+						organizationUrl.set("https://conficio.com")
 					}
 					contributor {
 						name.set("Dave Jarvis")
 						organization.set("White Magic Software, Ltd.")
 						organizationUrl.set("https://whitemagicsoftware.com")
 					}
+					contributor {
+						name.set("Caroline Bell")
+						email.set("caroline@halotroop.com")
+						organization.set("halotroop")
+						organizationUrl.set("https://web0.halotroop.com")
+					}
 				}
 
 				scm {
-					connection.set("scm:git:git@github.com:radkovo/SwingBox.git")
-					developerConnection.set("scm:git:git@github.com:radkovo/SwingBox.git")
-					url.set("https://github.com/radkovo/SwingBox")
+					connection.set("scm:git:git@github.com:halotroop2288/SwingBox.git")
+					developerConnection.set("scm:git:git@github.com:halotroop2288/SwingBox.git")
+					url.set("https://github.com/halotroop2288/SwingBox")
 					tag.set("HEAD")
 				}
 			}
 		}
 	}
-}
-
-signing {
-	sign(publishing.publications["mavenJava"])
 }
