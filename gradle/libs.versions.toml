@@ -1,0 +1,26 @@
+[versions]
+cssbox = "4.17"
+jstyleparser = "4.0.1"
+commons-io = "2.19.0"
+xml-apis = "2.0.2"
+httpcomponents = "5.5"
+jsoup = "1.21.1"
+
+[libraries]
+cssbox = { module = "net.sf.cssbox:cssbox", version.ref = "cssbox" }
+jstyleparser = { module = "net.sf.cssbox:jstyleparser", version.ref = "jstyleparser" }
+commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
+xml-apis = { module = "xml-apis:xml-apis", version.ref = "xml-apis" }
+httpclient = { module = "org.apache.httpcomponents.client5:httpclient5", version.ref = "httpcomponents" }
+httpclient-cache = { module = "org.apache.httpcomponents.client5:httpclient5-cache", version.ref = "httpcomponents" }
+jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
+
+[bundles]
+swingbox-implementation = [
+    "cssbox",
+    "jstyleparser",
+    "commons-io",
+    "httpclient",
+    "httpclient-cache",
+    "jsoup"
+]

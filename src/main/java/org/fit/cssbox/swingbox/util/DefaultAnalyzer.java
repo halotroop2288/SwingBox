@@ -30,9 +30,9 @@ import org.jsoup.helper.W3CDom;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.nio.charset.StandardCharsets;
 
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
-import static org.apache.commons.codec.CharEncoding.UTF_8;
 import static org.fit.cssbox.css.DOMAnalyzer.Origin.AGENT;
 
 /**
@@ -61,7 +61,7 @@ public class DefaultAnalyzer implements CSSBoxAnalyzer {
     final var uri = url.toURI();
 
     final var document = Jsoup.parse(
-        docSource.getInputStream(), UTF_8, uri.toString() );
+        docSource.getInputStream(), StandardCharsets.UTF_8.name(), uri.toString() );
     docSource.close();
 
     w3cdoc = mDom.fromJsoup( document );

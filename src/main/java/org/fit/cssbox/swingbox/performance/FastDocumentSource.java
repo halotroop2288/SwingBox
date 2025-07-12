@@ -1,45 +1,21 @@
-/*
- * Copyright 2020 White Magic Software, Ltd.
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *
- *  o Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- *  o Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 package org.fit.cssbox.swingbox.performance;
 
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.cache.BasicHttpCacheStorage;
-import org.apache.http.impl.client.cache.CacheConfig;
-import org.apache.http.impl.client.cache.CachingHttpClients;
+import org.apache.hc.client5.http.impl.cache.BasicHttpCacheStorage;
+import org.apache.hc.client5.http.impl.cache.CacheConfig;
+import org.apache.hc.client5.http.impl.cache.CachingHttpClients;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.util.TimeValue;
 import org.fit.cssbox.io.DocumentSource;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 public class FastDocumentSource extends DocumentSource {
   private final CloseableHttpClient mClient;
@@ -48,8 +24,8 @@ public class FastDocumentSource extends DocumentSource {
   private InputStream mInputStream;
   private String mContentType = "";
 
-  public FastDocumentSource( final URL url ) throws IOException {
-    super( url );
+  public FastDocumentSource(final URL url) throws IOException {
+    super(url);
     assert url != null;
 
     mClient = createHttpClient();
@@ -58,29 +34,25 @@ public class FastDocumentSource extends DocumentSource {
 
   public FastDocumentSource setURL(final URL url) {
     mUrl = url;
-
     return this;
   }
 
   private CloseableHttpClient createHttpClient() {
-    final var cacheLifetime = TimeUnit.HOURS.toSeconds( 1 );
+    final TimeValue cacheLifetime = TimeValue.ofHours(1);
 
-    final var cacheConfig =
-        CacheConfig.custom()
-                   .setMaxCacheEntries( 1000 )
-                   .setMaxObjectSize( 120 * 1024 )
-                   .setHeuristicCachingEnabled( true )
-                   .setHeuristicDefaultLifetime( cacheLifetime )
-                   .build();
+    final CacheConfig cacheConfig = CacheConfig.custom()
+        .setMaxCacheEntries(1000)
+        .setMaxObjectSize(120 * 1024)
+        .setHeuristicCachingEnabled(true)
+        .setHeuristicDefaultLifetime(cacheLifetime)
+        .build();
 
-    final var cacheStore = new BasicHttpCacheStorage( cacheConfig );
+    final BasicHttpCacheStorage cacheStore = new BasicHttpCacheStorage(cacheConfig);
 
-    final var builder =
-        CachingHttpClients.custom()
-                          .setCacheConfig( cacheConfig )
-                          .setHttpCacheStorage( cacheStore );
-
-    return builder.build();
+    return CachingHttpClients.custom()
+        .setCacheConfig(cacheConfig)
+        .setHttpCacheStorage(cacheStore)
+        .build();
   }
 
   @Override
@@ -96,28 +68,36 @@ public class FastDocumentSource extends DocumentSource {
   @Override
   public InputStream getInputStream() throws IOException {
     final URI uri;
-
     try {
       uri = getURL().toURI();
-    } catch( final Exception e ) {
-      throw new IOException( e );
+    } catch (final Exception e) {
+      throw new IOException(e);
     }
 
-    final var httpGet = new HttpGet( uri );
-    final var response = mClient.execute( httpGet );
+    final HttpGet httpGet = new HttpGet(uri);
 
-    final var entity = response.getEntity();
-    entity.getContentType();
+    ClassicHttpResponse response = null;
+    try {
+      response = mClient.executeOpen(null, httpGet, null);
 
-    final var contentType = ContentType.getOrDefault( entity );
-    mContentType = contentType.getMimeType();
+      final HttpEntity entity = response.getEntity();
+      if (entity == null) {
+        throw new IOException("No response entity for: " + uri);
+      }
 
-    return mInputStream = entity.getContent();
+      final ContentType contentType = ContentType.parse(entity.getContentType());
+      mContentType = contentType.getMimeType();
+
+      return mInputStream = entity.getContent();
+    } catch (Exception e) {
+      EntityUtils.consumeQuietly(response != null ? response.getEntity() : null);
+      throw new IOException("Error fetching: " + uri, e);
+    }
   }
 
   @Override
   public void close() throws IOException {
-    if( mInputStream != null ) {
+    if (mInputStream != null) {
       mInputStream.close();
     }
   }
