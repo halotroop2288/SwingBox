@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 package org.fit.cssbox.swingbox.demo;
@@ -62,13 +62,6 @@ public class SwingBrowser
     public void displayURL(String urlstring)
     {
         try {
-            if (!urlstring.startsWith("http:") &&
-                    !urlstring.startsWith("https:") &&
-                    !urlstring.startsWith("ftp:") &&
-                    !urlstring.startsWith("file:") &&
-                    !urlstring.startsWith("data:"))
-                        urlstring = "http://" + urlstring;
-                
             URL url = DataURLHandler.createURL(null, urlstring);
             urlText.setText(url.toString());
 
@@ -323,9 +316,10 @@ public class SwingBrowser
     {
         browser = new SwingBrowser();
         JFrame main = browser.getMainWindow();
-        main.setSize(1100, 850);
+        main.setTitle("Browser Demo");
+        main.setSize(854, 480);
         main.setVisible(true);
-        browser.displayURL("http://cssbox.sourceforge.net/swingbox");
+        browser.displayURL("https://cssbox.sourceforge.net/swingbox");
     }
 
 }

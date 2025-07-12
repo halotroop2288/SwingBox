@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -24,6 +24,7 @@ import org.fit.cssbox.swingbox.util.Constants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Element;
+import java.io.Serial;
 
 /**
  * @author Peter Bielik
@@ -32,6 +33,7 @@ import javax.swing.text.Element;
  */
 public class SwingBoxDocument extends DefaultStyledDocument
 {
+    @Serial
     private static final long serialVersionUID = 5342259762698268312L;
 
     /**
@@ -78,6 +80,7 @@ public class SwingBoxDocument extends DefaultStyledDocument
      */
     public class DelegateElement extends BranchElement
     {
+        @Serial
         private static final long serialVersionUID = 5636867648057150930L;
         private final LeafElement DEFAULT_CONTENT;
         private final String delegateName;

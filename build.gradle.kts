@@ -9,6 +9,9 @@ version = "1.3-SNAPSHOT"
 description = "A Java Swing component that allows displaying the (X)HTML documents including the CSS support."
 
 java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+
 	withSourcesJar()
 	withJavadocJar()
 }
@@ -39,7 +42,7 @@ publishing {
 				licenses {
 					license {
 						name.set("GNU Lesser General Public License 3.0")
-						url.set("http://www.gnu.org/licenses/lgpl-3.0.txt")
+						url.set("https://www.gnu.org/licenses/lgpl-3.0.txt")
 					}
 				}
 

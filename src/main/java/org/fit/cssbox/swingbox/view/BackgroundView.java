@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -72,7 +72,7 @@ public class BackgroundView extends View implements CSSBoxView
                 elementAttributes.put(Constants.ELEMENT_A_ATTRIBUTE_NAME, pelem.getAttribute("name"));
                 elementAttributes.put(Constants.ELEMENT_A_ATTRIBUTE_TITLE, pelem.getAttribute("title"));
                 String target = pelem.getAttribute("target");
-                if ("".equals(target))
+                if (target.isEmpty())
                 {
                     target = "_self";
                 }

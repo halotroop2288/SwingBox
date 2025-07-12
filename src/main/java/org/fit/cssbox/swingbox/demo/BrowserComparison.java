@@ -13,7 +13,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -36,6 +36,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.io.Serial;
 import java.net.URL;
 
 /**
@@ -48,11 +49,12 @@ import java.net.URL;
  */
 public class BrowserComparison extends JFrame
 {
+    @Serial
     private static final long serialVersionUID = 3078719188136612454L;
     private final BrowserPane swingbox = new BrowserPane();
     private BrowserCanvas cssbox = null;
     private final JEditorPane editorkit = new JEditorPane();
-    private final JTextField txt = new JTextField("http://www.aktualne.cz", 60);
+    private final JTextField txt = new JTextField("https://www.aktualne.cz", 60);
     private final JScrollPane contentScroll = new JScrollPane();
 
     /**
@@ -113,8 +115,8 @@ public class BrowserComparison extends JFrame
 
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(1200, 1000));
-        setTitle("Demo");
+        setPreferredSize(new Dimension(854, 480));
+        setTitle("Browser Comparison Demo");
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -129,12 +131,6 @@ public class BrowserComparison extends JFrame
 
     public void loadPage(String page)
     {
-        if (!page.startsWith("http:") && !page.startsWith("ftp:")
-                && !page.startsWith("file:"))
-        {
-            page = "http://" + page;
-        }
-
         try {
             loadPage( new URL( page ) );
         }
@@ -209,10 +205,9 @@ public class BrowserComparison extends JFrame
             }
             
             //find if there is something smallest that fits among the child boxes
-            if (root instanceof ElementBox)
+            if (root instanceof ElementBox eb)
             {
-                ElementBox eb = (ElementBox) root;
-                for (int i = eb.getStartChild(); i < eb.getEndChild(); i++)
+				for (int i = eb.getStartChild(); i < eb.getEndChild(); i++)
                 {
                     Box inside = locateBox(((ElementBox) root).getSubBox(i), x, y);
                     if (inside != null)

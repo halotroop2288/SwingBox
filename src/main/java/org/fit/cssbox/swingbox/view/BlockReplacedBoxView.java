@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -72,7 +72,7 @@ public class BlockReplacedBoxView extends BlockBoxView
     private void loadElementAttributes()
     {
         /*
-         * http://www.w3schools.com/TAGS/tag_img.asp html attributy : alt -
+         * https://www.w3schools.com/TAGS/tag_img.asp html attributy : alt -
          * alternativny popisok, zobrazit ak nie je dostupny image title -
          * popup/tooltip text
          */
@@ -129,15 +129,15 @@ public class BlockReplacedBoxView extends BlockBoxView
         String tmp;
         Map<String, String> elementAttributes = anchor.getProperties();
 
-        if (title != null && !"".equals(title))
+        if (title != null && !title.isEmpty())
             val = val + "<b>" + title + "</b><br>";
         tmp = elementAttributes.get(Constants.ELEMENT_A_ATTRIBUTE_TITLE);
-        if (tmp != null && !"".equals(tmp))
+        if (tmp != null && !tmp.isEmpty())
             val = val + "<i>" + tmp + "</i><br>";
         tmp = elementAttributes.get(Constants.ELEMENT_A_ATTRIBUTE_HREF);
-        if (tmp != null && !"".equals(tmp)) val = val + tmp;
+        if (tmp != null && !tmp.isEmpty()) val = val + tmp;
 
-        return "".equals(val) ? null : "<html>" + val + "</html>";
+        return val.isEmpty() ? null : "<html>" + val + "</html>";
     }
 
     @Override
@@ -219,10 +219,9 @@ public class BlockReplacedBoxView extends BlockBoxView
 
     private void paintHighlights(Graphics g, Shape shape)
     {
-        if (container instanceof JTextComponent)
+        if (container instanceof JTextComponent tc)
         {
-            JTextComponent tc = (JTextComponent) container;
-            Highlighter h = tc.getHighlighter();
+			Highlighter h = tc.getHighlighter();
             if (h instanceof LayeredHighlighter)
             {
                 ((LayeredHighlighter) h).paintLayeredHighlights(g,

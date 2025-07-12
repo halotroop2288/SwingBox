@@ -13,7 +13,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -132,17 +132,17 @@ public class InlineReplacedBoxView extends InlineBoxView
         String val = "";
         String tmp;
         // image title
-        if (title != null && !"".equals(title))
+        if (title != null && !title.isEmpty())
             val = val + "<b>" + title + "</b><br>";
         // anchor title
         tmp = elementAttributes.get(Constants.ELEMENT_A_ATTRIBUTE_TITLE);
-        if (tmp != null && !"".equals(tmp))
+        if (tmp != null && !tmp.isEmpty())
             val = val + "<i>" + tmp + "</i><br>";
         // anchor href
         tmp = elementAttributes.get(Constants.ELEMENT_A_ATTRIBUTE_HREF);
-        if (tmp != null && !"".equals(tmp)) val = val + tmp;
+        if (tmp != null && !tmp.isEmpty()) val = val + tmp;
 
-        return "".equals(val) ? null : "<html>" + val + "</html>";
+        return val.isEmpty() ? null : "<html>" + val + "</html>";
     }
 
     @Override

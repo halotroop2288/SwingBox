@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -109,7 +109,7 @@ public class ElementBoxView extends CompositeView implements CSSBoxView
             elementAttributes.put(Constants.ELEMENT_A_ATTRIBUTE_NAME, elem.getAttribute("name"));
             elementAttributes.put(Constants.ELEMENT_A_ATTRIBUTE_TITLE, elem.getAttribute("title"));
             String target = elem.getAttribute("target");
-            if ("".equals(target))
+            if (target.isEmpty())
             {
                 target = "_self";
             }
@@ -222,7 +222,7 @@ public class ElementBoxView extends CompositeView implements CSSBoxView
      * setPropertiesFromAttributes() method to set the paragraph properties from
      * the css attributes. The call is made at this time to ensure the ability
      * to resolve upward through the parents view attributes.
-     * 
+     * <p>
      * Establishes the parent view for this view. This is guaranteed to be
      * called before any other methods if the parent view is functioning
      * properly. This is also the last method called, since it is called to
@@ -447,10 +447,9 @@ public class ElementBoxView extends CompositeView implements CSSBoxView
     private Rectangle getCompleteBoxAllocation(Box b)
     {
         Rectangle ret = b.getAbsoluteBounds();
-        if (b instanceof ElementBox)
+        if (b instanceof ElementBox eb)
         {
-            ElementBox eb = (ElementBox) b;
-            for (int i = eb.getStartChild(); i < eb.getEndChild(); i++)
+			for (int i = eb.getStartChild(); i < eb.getEndChild(); i++)
             {
                 Box child = eb.getSubBox(i);
                 if (child.isVisible())
@@ -610,10 +609,9 @@ public class ElementBoxView extends CompositeView implements CSSBoxView
 
     private void findLeaves(View root, Vector<View> leaves)
     {
-        if (root instanceof ElementBoxView)
+        if (root instanceof ElementBoxView ev)
         {
-            ElementBoxView ev = (ElementBoxView) root;
-            if (ev.getViewCount() == 0)
+			if (ev.getViewCount() == 0)
                 leaves.add(ev);
             else
             {
@@ -638,10 +636,9 @@ public class ElementBoxView extends CompositeView implements CSSBoxView
                 found = root;
             
             //find if there is something smallest that fits among the child boxes
-            if (root instanceof ElementBox)
+            if (root instanceof ElementBox eb)
             {
-                ElementBox eb = (ElementBox) root;
-                for (int i = eb.getStartChild(); i < eb.getEndChild(); i++)
+				for (int i = eb.getStartChild(); i < eb.getEndChild(); i++)
                 {
                     Box inside = locateBox(((ElementBox) root).getSubBox(i), x, y);
                     if (inside != null)

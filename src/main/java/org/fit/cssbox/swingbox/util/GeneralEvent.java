@@ -12,12 +12,13 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
 package org.fit.cssbox.swingbox.util;
 
+import java.io.Serial;
 import java.util.EventObject;
 
 /**
@@ -29,6 +30,7 @@ import java.util.EventObject;
 @SuppressWarnings("unused")
 public class GeneralEvent extends EventObject
 {
+    @Serial
     private static final long serialVersionUID = -3946243806649687837L;
     public Object primary_value;
     public Object secondary_value;

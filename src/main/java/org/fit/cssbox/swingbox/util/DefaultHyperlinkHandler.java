@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -25,7 +25,7 @@ import java.awt.*;
 import java.io.IOException;
 
 /**
- * Customizable implementation of HyperlinListener. This default implementation only changes
+ * Customizable implementation of HyperlinkListener. This default implementation only changes
  * the cursor shape when a link is entered or exited.
  * 
  * @author Peter Bielik
@@ -97,7 +97,7 @@ public class DefaultHyperlinkHandler implements HyperlinkListener
     }
 
     /**
-     * Sets the mouse cursor cursor.
+     * Sets the mouse cursor.
      * 
      * @param editor
      *            the editor

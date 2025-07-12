@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -45,6 +45,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @SuppressWarnings("unused")
 public class SwingBoxEditorKit extends StyledEditorKit
 {
+    @Serial
     private static final long serialVersionUID = -2774578978116020429L;
 
     private CSSBoxAnalyzer cbanalyzer;
@@ -158,13 +159,7 @@ public class SwingBoxEditorKit extends StyledEditorKit
         return "text/html";
     }
 
-    @Override
-    public Caret createCaret()
-    {
-        return null;
-    }
-
-    @Override
+	@Override
     public void write(OutputStream out, Document doc, int pos, int len)
             throws IOException, BadLocationException
     {
@@ -227,7 +222,7 @@ public class SwingBoxEditorKit extends StyledEditorKit
 
         if (doc instanceof org.fit.cssbox.swingbox.SwingBoxDocument)
         {
-            InputStream is = new ReaderInputStream(in, UTF_8);
+            InputStream is = ReaderInputStream.builder().setCharset(UTF_8).get();
             readImpl(is, (org.fit.cssbox.swingbox.SwingBoxDocument) doc, pos);
         }
         else

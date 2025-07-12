@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -23,7 +23,6 @@ import org.w3c.dom.Document;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 /**
@@ -68,14 +67,9 @@ public class ContentWriter
         // hint: this should be reimplemented !!! > use Writer in NormalOutput !
         ByteArrayOutputStream baos = new ByteArrayOutputStream(8 * 1024);
         out.dumpTo(new PrintStream(baos));
-        try
-        {
-            buffer.append(baos.toString(Charset.defaultCharset().name()));
-        } catch (UnsupportedEncodingException ignored)
-        {
-        }
+		buffer.append(baos.toString(Charset.defaultCharset()));
 
-        return buffer;
+		return buffer;
     }
 
 }

@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -47,7 +47,7 @@ public class Anchor
     public Anchor(boolean activity, Map<String, String> props)
     {
         this.active = activity;
-        properties = new HashMap<String, String>(props);
+        properties = new HashMap<>(props);
     }
 
     /**
@@ -55,7 +55,7 @@ public class Anchor
      */
     public Anchor()
     {
-        properties = new HashMap<String, String>();
+        properties = new HashMap<>();
         active = false;
     }
 
@@ -106,7 +106,7 @@ public class Anchor
     public String toString()
     {
         return "Anchor(@" + Integer.toHexString(hashCode()) + ")[Active: "
-                + active + ", Properties: " + properties.toString() + "]";
+                + active + ", Properties: " + properties + "]";
     }
     
     /**

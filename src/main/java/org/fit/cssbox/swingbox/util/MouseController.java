@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -92,6 +92,8 @@ public class MouseController extends MouseAdapter
                 Element elem = ((StyledDocument) editor.getDocument()).getCharacterElement(pos);
                 Object bb = elem.getAttributes().getAttribute(Constants.ATTRIBUTE_BOX_REFERENCE);
                 Anchor anchor = (Anchor) elem.getAttributes().getAttribute(Constants.ATTRIBUTE_ANCHOR_REFERENCE);
+
+                if (anchor == null) return;
 
                 if (elem != prevElem)
                 {

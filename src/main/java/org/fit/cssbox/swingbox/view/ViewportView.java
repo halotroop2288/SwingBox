@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *  
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  * 
  */
 
@@ -63,7 +63,7 @@ public class ViewportView extends BlockBoxView implements ComponentListener
     {
         /*
          * if a new layout is created, everything is built from scratch and
-         * valid.. if did not succeed, then world has not changed and mark it is
+         * valid... if did not succeed, then world has not changed and mark it is
          * valid
          */
         boolean result = checkSize(dim);
@@ -98,14 +98,13 @@ public class ViewportView extends BlockBoxView implements ComponentListener
 
         if ( (container instanceof JEditorPane)
             && (parentContainer = container.getParent()) != null
-            && (parentContainer instanceof JViewport) )
+            && (parentContainer instanceof JViewport viewPort) )
         {
 
             editor = (JEditorPane) container;
 
             // our parent is a JScrollPane (JViewPort)
-            JViewport viewPort = (JViewport) parentContainer;
-            JComponent cachedObject;
+			JComponent cachedObject;
 
             if (cachedViewPort != null)
             {

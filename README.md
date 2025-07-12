@@ -7,4 +7,4 @@ Java and it is using the CSSBox rendering engine for rendering the documents.
 	
 
 See the project page for more information and downloads:
-[http://cssbox.sourceforge.net/swingbox](http://cssbox.sourceforge.net/swingbox)
+[https://cssbox.sourceforge.net/swingbox](https://cssbox.sourceforge.net/swingbox)

@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  *
  */
 
@@ -73,7 +73,7 @@ public class TextBoxView extends View implements CSSBoxView
     /**
      * Instantiates a new text based view, able to display rich text. This view
      * corresponds to TextBox in CSSBox. <br>
-     * <a href="http://www.w3.org/TR/CSS21/box.html">Box Model</a>
+     * <a href="https://www.w3.org/TR/CSS21/box.html">Box Model</a>
      *
      * @param elem
      *            the elem
@@ -110,7 +110,7 @@ public class TextBoxView extends View implements CSSBoxView
                 elementAttributes.put(Constants.ELEMENT_A_ATTRIBUTE_NAME, pelem.getAttribute("name"));
                 elementAttributes.put(Constants.ELEMENT_A_ATTRIBUTE_TITLE, pelem.getAttribute("title"));
                 String target = pelem.getAttribute("target");
-                if ("".equals(target))
+                if (target.isEmpty())
                 {
                     target = "_self";
                 }
@@ -302,12 +302,12 @@ public class TextBoxView extends View implements CSSBoxView
             String val = "";
             String tmp;
             tmp = elementAttributes.get(Constants.ELEMENT_A_ATTRIBUTE_TITLE);
-            if (tmp != null && !"".equals(tmp))
+            if (tmp != null && !tmp.isEmpty())
                 val = val + "<i>" + tmp + "</i><br>";
             tmp = elementAttributes.get(Constants.ELEMENT_A_ATTRIBUTE_HREF);
-            if (tmp != null && !"".equals(tmp)) val = val + tmp;
+            if (tmp != null && !tmp.isEmpty()) val = val + tmp;
 
-            return "".equals(val) ? null : "<html>" + val + "</html>";
+            return val.isEmpty() ? null : "<html>" + val + "</html>";
         }
 
         return null;
@@ -345,10 +345,9 @@ public class TextBoxView extends View implements CSSBoxView
         int p1 = getEndOffset();
         Color fg = getForeground();
 
-        if (c instanceof JTextComponent)
+        if (c instanceof JTextComponent tc)
         {
-            JTextComponent tc = (JTextComponent) c;
-            if (!tc.isEnabled())
+			if (!tc.isEnabled())
             {
                 fg = tc.getDisabledTextColor();
             }

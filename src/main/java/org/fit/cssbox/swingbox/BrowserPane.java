@@ -12,7 +12,7 @@
  * GNU Lesser General Public License for more details.
  * <p>
  * You should have received a copy of the GNU Lesser General Public License
- * along with SwingBox. If not, see <http://www.gnu.org/licenses/>.
+ * along with SwingBox. If not, see <https://www.gnu.org/licenses/>.
  */
 
 package org.fit.cssbox.swingbox;
@@ -29,6 +29,7 @@ import java.awt.image.BufferedImage;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serial;
 import java.lang.reflect.InvocationTargetException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -46,7 +47,8 @@ import java.util.*;
  * @since 1.0 - 28.9.2010
  */
 @SuppressWarnings("unused")
-public class BrowserPane extends JEditorPane {
+public class BrowserPane extends JTextPane {
+  @Serial
   private static final long serialVersionUID = 7303652028812084960L;
   private InputStream loadingStream;
   private Hashtable<String, Object> pageProperties;
@@ -335,16 +337,15 @@ public class BrowserPane extends JEditorPane {
   @Override
   protected InputStream getStream( URL page ) throws IOException {
     final URLConnection conn = setConnectionProperties( page.openConnection() );
-    // http://stackoverflow.com/questions/875467/java-client-certificates-over-https-ssl
+    // https://stackoverflow.com/questions/875467/java-client-certificates-over-https-ssl
 
-   if( conn instanceof HttpURLConnection ) {
-      HttpURLConnection hconn = (HttpURLConnection) conn;
-      hconn.setInstanceFollowRedirects( false );
+   if( conn instanceof HttpURLConnection connection ) {
+      connection.setInstanceFollowRedirects( false );
       Object postData = getPostData();
       if( postData != null ) {
-        handlePostData( hconn, postData );
+        handlePostData( connection, postData );
       }
-      int response = hconn.getResponseCode();
+      int response = connection.getResponseCode();
       boolean redirect = (response >= 300 && response <= 399);
 
       /*
@@ -437,7 +438,6 @@ public class BrowserPane extends JEditorPane {
           // we are loading asynchronously, so we need to cancel
           // the old stream.
           loadingStream.close();
-          loadingStream = null;
         }
 
         loadingStream = in;
@@ -548,8 +548,8 @@ public class BrowserPane extends JEditorPane {
    * Mobile/7B405.
    */
   private URLConnection setConnectionProperties( URLConnection conn ) {
-    // http://www.useragentstring.com/index.php
-    // http://tools.ietf.org/html/rfc1945
+    // https://www.useragentstring.com/index.php
+    // https://tools.ietf.org/html/rfc1945
     // Opera 11.50 : Opera/9.80 (X11; Linux i686; U; sk) Presto/2.9.168
     // Version/11.50
     // CSSBox : Mozilla/5.0 (compatible; BoxBrowserTest/2.x; Linux)
